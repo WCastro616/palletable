@@ -6,8 +6,8 @@ import { ClearCanvasButton } from './ClearCanvasButton';
 function App() {
   return (
     <>
-      <Canvas/>
       <ClearCanvasButton/>
+      <Canvas/>
     </>
   );
 }

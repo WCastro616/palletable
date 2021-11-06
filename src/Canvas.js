@@ -5,8 +5,7 @@ export function Canvas() {
   const {
     canvasRef,
     prepareCanvas,
-    toggleDrawing,
-    draw,
+    draw
   } = useCanvas();
 
   useEffect(() => {
@@ -15,8 +14,7 @@ export function Canvas() {
 
   return (
     <canvas
-      onMouseDown={toggleDrawing}
-      onMouseMove={draw}
+      onMouseDown={draw}
       ref={canvasRef}
     />
   );
