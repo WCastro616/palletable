@@ -116,7 +116,33 @@ if __name__ == "__main__":
             """ 3.2 COMPUTE BAND POWERS """
             # Get newest samples from the buffer
             data_epoch = utils.get_last_data(eeg_buffer,
-                                             int(EPOCH_LENGTH * fs))
+                                                int(EPOCH_LENGTH * fs))
+
+            band_powers = utils.compute_band_powers(data_epoch, fs)
+
+            band_buffer, _ = utils.update_buffer(band_buffer,
+                                                    np.asarray([band_powers]))
+            # Compute the average band powers for all epochs in buffer
+            # This helps to smooth out noise
+            smooth_band_powers = np.mean(band_buffer, axis=0)
+
+            """ CALCULATE COLOR """ 
+            color = (
+                min(255 * smooth_band_powers[Band.Beta], 255),
+                min(255 * smooth_band_powers[Band.Alpha], 255),
+                min(255 * smooth_band_powers[Band.Theta], 255)
+            )
+
+            """
+            fig, ax = plt.subplots()
+            ax.set_facecolor((smooth_band_powers[Band.Beta],
+                              smooth_band_powers[Band.Alpha],
+                              smooth_band_powers[Band.Theta]))
+            """
+
+            print(color)
+ 
+            """ BLINK DETECTION """ 
             #print(data_epoch.shape)
 
             matchFilt = signal.hilbert(filt)
