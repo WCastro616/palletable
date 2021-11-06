@@ -15,19 +15,17 @@ export const CanvasProvider = ({ children }) => {
     canvas.style.height = `${window.innerHeight}px`;
 
     const context = canvas.getContext("2d")
-    context.scale(2, 2);
+    context.scale(1, 1);
     context.strokeStyle = "black";
     contextRef.current = context;
   };
-
-
 
   const draw = ({ nativeEvent }) => {
     let color = getColor();
     const { offsetX, offsetY } = nativeEvent;
     contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY);
-    contextRef.current.arc(offsetX, offsetY, 50, 0, 2 * Math.PI);
+    canvasRef.current.getContext("2d").fillStyle = "black";
+    contextRef.current.arc(offsetX, offsetY, 20, 0, 2 * Math.PI);
     contextRef.current.fill();
     contextRef.current.closePath();
   };
