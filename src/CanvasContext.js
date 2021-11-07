@@ -15,12 +15,13 @@ export const CanvasProvider = ({ children }) => {
     canvas.style.height = `${window.innerHeight}px`;
 
     const context = canvas.getContext("2d")
-    context.scale(1, 1);
+    context.scale(2, 2);
     context.strokeStyle = "black";
     contextRef.current = context;
   };
 
   const draw = ({ nativeEvent }) => {
+    let color = Color.getColor;
     const { offsetX, offsetY } = nativeEvent;
     contextRef.current.beginPath();
     canvasRef.current.getContext("2d").fillStyle = "black";
@@ -50,5 +51,22 @@ export const CanvasProvider = ({ children }) => {
     </CanvasContext.Provider>
   );
 };
+
+class Color {
+  getColor = () => {
+    let BASE_URL = "http://127.0.0.1:5000";
+    let url = BASE_URL + "/coords"
+    fetch(url, {method: "POST"})
+      .then(resp => {return resp.text()})
+      .catch(this.statusCheck);
+  }
+
+  async statusCheck(resp) {
+    if (!resp.ok) {
+      throw new Error(await resp.text());
+    }
+    return resp;
+  }
+}
 
 export const useCanvas = () => useContext(CanvasContext);
