@@ -37,17 +37,6 @@ export const CanvasProvider = ({ children }) => {
     context.fillRect(0, 0, canvas.width, canvas.height)
   }
 
-  const getColor = () => {
-    let BASE_URL = 'http://127.0.0.1:5000';
-    let url = BASE_URL + "/coords";
-    fetch(url, {method : "POST", body : params})
-    .then(res => {if (!res.ok) {
-      throw new Error(await res.text());
-      }
-      return res;})
-    .then(resp => {return resp.text()})
-  }
-
   return (
     <CanvasContext.Provider
       value={{
